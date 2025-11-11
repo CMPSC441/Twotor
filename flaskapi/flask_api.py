@@ -13,7 +13,7 @@ def process_message():
     #Get the incoming message from the POST request
     data = request.json  #Expecting a JSON body
     message_content = data.get('message')  #Extract the message from the JSON
-    print(message_content)
+    print("sent:", message_content)
 
     #Ensure the message content is provided
     if not message_content:
@@ -24,9 +24,23 @@ def process_message():
     #Proceed only if a valid command was detected
     clean_question = user_message.strip()
 
-    claude_response = claude_answer(clean_question)
+    try:
+        claude_response = claude_answer(clean_question)
+    except Exception as e:
+        print(f"Claude error: {e}")
+        claude_response = None
 
-    chatgpt_response = chatgpt_evaluate(clean_question, claude_response)
+        # Try to get ChatGPT's evaluation (only if Claude succeeded)
+    chatgpt_response = None
+    if claude_response:
+        try:
+            chatgpt_response = chatgpt_evaluate(clean_question, claude_response)
+        except Exception as e:
+            print(f"ChatGPT evaluation error: {e}")
+            chatgpt_response = None
 
-    return jsonify({"answer": claude_response,
-        "evaluation": chatgpt_response})
+    # Return whatever we got
+    return jsonify({
+        "answer": claude_response,
+        "evaluation": chatgpt_response,
+    })
