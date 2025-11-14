@@ -28,7 +28,7 @@ def process_message():
         claude_response = claude_answer(clean_question)
     except Exception as e:
         print(f"Claude error: {e}")
-        claude_response = None
+        return jsonify({"message":"Error: Claude may be down, or there is another problem."})
 
         # Try to get ChatGPT's evaluation (only if Claude succeeded)
     chatgpt_response = None
@@ -44,3 +44,4 @@ def process_message():
         "answer": claude_response,
         "evaluation": chatgpt_response,
     })
+
