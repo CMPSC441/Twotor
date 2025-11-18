@@ -15,7 +15,7 @@ function Sidebar({ setCurrentPage, setChatHistory, handleClearChat }) {
 
   return (
     <div className="sidebar">
-      <h2 style={{ marginBottom: '30px' }}>StockSense</h2>
+      <h2 style={{ marginBottom: '30px' }}>Twotor</h2>
       <nav>
         {options.map((option, index) => (
           <div className="sidebarOption"
@@ -72,11 +72,12 @@ function ChatInterface({ chatId, chatHistory, setChatHistory }) {
       // Check if the response is successful
       if (response.ok) {
         const data = await response.json();
-        
-        // Assuming the server response contains a message
+
+        // Backend returns both Claude's answer and ChatGPT's evaluation
         const aiResponse = {
           type: 'ai_response',
-          content: data.message,  // Data from Flask response
+          answer: data.answer,  // Claude's response
+          evaluation: data.evaluation,  // ChatGPT's evaluation
           timestamp: new Date().toISOString(),
         };
 
@@ -117,16 +118,34 @@ function ChatInterface({ chatId, chatHistory, setChatHistory }) {
   return (
     <div className="content">
       <div className="topWarningBar">
-        <p><b>Please double check information provided by StockSense. AI generated content may not always be accurate.</b></p>
+        <p><b>Please double check information provided by AI Study Assistant. AI generated content may not always be accurate.</b></p>
       </div>
       <div className="chatArea">
-        <div className="output">
-		  {chatHistory[chatId]?.map((msg, index) => (
-			<div key={index}>
-			  <p>{msg.content}</p>
-			</div>
-		  ))}
-		</div>
+        <div className="outputContainer">
+          <div className="outputSection">
+            <h3 className="outputHeader">Claude's Answer</h3>
+            <div className="output">
+              {chatHistory[chatId]?.map((msg, index) => (
+                <div key={index}>
+                  {msg.type === 'getting_input' && <p>{msg.content}</p>}
+                  {msg.type === 'ai_response' && <p>{msg.answer}</p>}
+                  {msg.type === 'fail_response' && <p>{msg.content}</p>}
+                  {msg.type === 'error' && <p>{msg.content}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="outputSection">
+            <h3 className="outputHeader">ChatGPT Review</h3>
+            <div className="output">
+              {chatHistory[chatId]?.map((msg, index) => (
+                <div key={index}>
+                  {msg.type === 'ai_response' && <p>{msg.evaluation}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
         <form onSubmit={handleSubmit} className="bottomChatBar">
           <input className="chatInput"
             type="text"
