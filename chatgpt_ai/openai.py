@@ -1,8 +1,9 @@
 from dotenv import load_dotenv
 import openai
+import os
 
 load_dotenv()
-gpt_client = openai.OpenAI()
+gpt_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def chatgpt_evaluate(question, answer):
 
