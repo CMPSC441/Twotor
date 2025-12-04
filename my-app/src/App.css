@@ -1,4 +1,4 @@
-.app {
+ .app {
   display: flex;
   height: 100vh;
   font-family: 'Arial';
@@ -139,4 +139,88 @@
 
 .hidden {
 	padding-top: 100px;
+}
+
+.notesInputArea {
+  margin-bottom: 20px;
+}
+
+.notesTextarea {
+  width: 100%;
+  min-height: 300px;
+  padding: 15px;
+  font-size: 16px;
+  font-family: 'Arial';
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.notesTextarea:focus {
+  outline: none;
+  border-color: #0056b3;
+}
+
+.notesCharCounter {
+  text-align: right;
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.notesButtonContainer {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.notesButton {
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: white;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.notesButton:hover {
+  background-color: #0056b3;
+}
+
+.notesCancelButton {
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #dc3545;
+  color: white;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.notesCancelButton:hover {
+  background-color: #c82333;
+}
+
+.topicInputContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.topicInput {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  min-width: 300px;
+}
+
+.topicInput:focus {
+  outline: none;
+  border-color: #0056b3;
 }

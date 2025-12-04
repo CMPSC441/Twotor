@@ -1,8 +1,9 @@
 from dotenv import load_dotenv
 import anthropic
+import os
 
 load_dotenv()
-claude_client = anthropic.Anthropic()
+claude_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
 def claude_answer(question):
 
